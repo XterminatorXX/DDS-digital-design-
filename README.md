@@ -10,10 +10,11 @@ Two Verilog-Vivado implementations of DDS (Direct Digital Synthesis):
 ## 🏗️ Repository Structure
 DDS-Generator/ <br>
 ├── LUT-Based-DDS/ # LUT implementation <br>
-│ ├── full_sine.sv # Main module<br>
+│ ├── full_sine.v # Main module+ Test bench<br>
 │ ├── blk_mem_gen_0.xci # Xilinx RO IP<br>
-│ ├── tb_full_sine.sv # Testbench<br>
-│ └── USER-GUIDE.md # Setup instructions<br>
+│ ├── full_sin_LUT.coe # coefficient file for implementing directly in block ROM<br>
+│ └── coe_full_sine.m # Matlab code for building the coe<br>
+| └── USER-GUIDE.md # Usage instructions<br>
 │<br>
 └── CORDIC-Based-DDS/ # CORDIC implementation<br>
 ├── cordic_dds.sv # CORDIC pipeline<br>
