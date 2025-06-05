@@ -13,7 +13,7 @@ DDS-Generator/ <br>
 │ ├── full_sine.sv # Main module<br>
 │ ├── blk_mem_gen_0.xci # Xilinx RO IP<br>
 │ ├── tb_full_sine.sv # Testbench<br>
-│ └── USER-GUIDE.md # Setup instructions<>br
+│ └── USER-GUIDE.md # Setup instructions<br>
 │<br>
 └── CORDIC-Based-DDS/ # CORDIC implementation<br>
 ├── cordic_dds.sv # CORDIC pipeline<br>
