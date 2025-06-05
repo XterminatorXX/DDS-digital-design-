@@ -3,7 +3,7 @@
 
 
 ## 📌 Overview
-Two Verilog implementations of DDS (Direct Digital Synthesis):
+Two Verilog-Vivado implementations of DDS (Direct Digital Synthesis):
 1. **LUT-Based** (Look-Up Table) - Fast, memory-intensive  
 2. **CORDIC-Based** - Iterative, memory-efficient  
 
