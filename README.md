@@ -14,7 +14,7 @@ DDS-Generator/ <br>
 │ ├── blk_mem_gen_0.xci # Xilinx RO IP<br>
 │ ├── full_sin_LUT.coe # coefficient file for implementing directly in block ROM<br>
 │ └── coe_full_sine.m # Matlab code for building the coe<br>
-| └── User_guide.md # Usage instructions<br>
+ | └── User_guide.md # Usage instructions<br>
 │<br>
 └── CORDIC-Based-DDS/ # CORDIC implementation<br>
 ├── cordic_dds.sv # CORDIC pipeline<br>
