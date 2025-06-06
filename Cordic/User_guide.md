@@ -23,32 +23,68 @@ This project implements a **CORDIC-based DDS** system in Verilog targeting an **
 
 ---
 
+
 ## ✅ How to Use
 
 1. **Understand Input/Output Range:**
-   - CORDIC input angle: 14-bit signed integer  
-     `-8192` to `+8191` ↔ `-π/2` to `+π/2`
-   - Output:  
-     `sin_out`, `cos_out` are 14-bit signed, ranging from `-8191` to `+8191`.
+   - The CORDIC module uses a **14-bit signed angle input**, spanning:
+     ```
+     -8192 to +8191 → represents -π/2 to +π/2
+     ```
+   - The output sine and cosine values are also **14-bit signed integers**, ranging approximately:
+     ```
+     sin_out, cos_out ∈ [-6741, +6741]
+     ```
+   - CORDIC introduces a **gain** (`K`) due to vector rotations:
+     - For **13 iterations**, the gain is approximately:
+       ```
+       K ≈ 0.60725
+       ```
+     - To retrieve the actual sine/cosine values:
+       ```
+       sin_actual = (sin_out / 4096) * K
+       cos_actual = (cos_out / 4096) * K
+       ```
+     - ✳️ Example:
+       ```
+       If sin_out = 6741
+       sin_actual = (6741 / 4096) * 0.60725 ≈ 0.99938 ≈ 1.0
+       ```
 
 2. **Phase Accumulator + FSM Logic:**
-   - The FSM divides the full `0–2π` range into **4 quadrants**.
-   - Internally maps each quadrant's phase to the CORDIC input range.
-   - Output signs are corrected based on the quadrant via a **14-cycle pipeline**.
+   - The **FSM** divides the full `0 – 2π` range into 4 quadrants.
+   - Internally maps each quadrant’s phase into the CORDIC's accepted `-π/2 to +π/2` input range.
+   - The correct sign of sine and cosine is restored after a **14-cycle pipeline delay**, accounting for the CORDIC latency and FSM decisions.
 
 3. **Set Frequency using `M`:**
    - `M` is a 14-bit signed **frequency control word**.
-   - Larger values of `M` yield higher output frequency.
-   - Example: `M = 14'd200` produces a low-frequency waveform.
+   - The output frequency `f_out` is computed as:
+     ```
+     f_out = (M / 2^N) * f_clk
+     where:
+       M     = frequency control word
+       N     = phase accumulator width (here, N = 14)
+       f_clk = system clock frequency (e.g., 200 MHz)
+     ```
+   - ✳️ Example:
+     ```
+     M = 200
+     f_out = (200 / 16384) * 200e6 = 2.441 MHz
+     ```
+     When observed in simulation, the output is ≈ 2.440 MHz, confirming the formula’s accuracy.
 
 4. **Simulate:**
-   - Use `main_phase_14bit_tb.v` to simulate the full system.
-   - Run the waveform viewer to observe:
-     - `sin_out`, `cos_out`
-     - `phase_acc` values cycling
-     - Correct quadrant control (`state`)
+   - Use `main_phase_14bit_tb.v` to simulate the full DDS pipeline.
+   - Open the waveform viewer (e.g., Vivado or ModelSim):
+     - Set `sin_out` and `cos_out` **radix to "Signed Decimal"** for correct waveform visualization.
+     - Use analog plotting to view sine and cosine waveforms smoothly.
+   - Observe:
+     - `sin_out`, `cos_out` waveform shapes
+     - `phase_acc` cycling across 0 to 2π
+     - Quadrant transitions via the `state` signal
 
 ---
+
 
 ## 📌 Notes
 
@@ -70,9 +106,6 @@ This project implements a **CORDIC-based DDS** system in Verilog targeting an **
     - Array sizes for `x`, `y`, `z`, `state_pipeline`
     - Loop bounds for iteration logic
     - Arctangent table values
-
-- **To adapt for unsigned angles:**
-  - Add logic to convert unsigned angles to signed range (`-π` to `+π`).
 
 ---
 
