@@ -50,4 +50,4 @@ Check User guide in the Cordic directory
 | **Memory**  | High (ROM)       | None              |
 | **Precision**| Fixed           | Adjustable        |
 
-![VIVADO SIMULATION](images/vivado_sim.png)
+![VIVADO SIMULATION](images/vivado_simulation.png)
