@@ -2,6 +2,8 @@
 **Sine/Cosine Wave Generation using LUT & CORDIC**  
 The phase bit width (12-bit) and data bit width (14-bit) were selected to match the requirements of my RF-SoC board and DAC interface. You can easily adapt these widths in the code to suit your hardware constraints." 
 
+![CORDIC vs Ideal Sine](images/Screenshot%202025-06-06%20235956.png)
+
 
 ## 📌 Overview
 Two Verilog-Vivado implementations of DDS (Direct Digital Synthesis):
